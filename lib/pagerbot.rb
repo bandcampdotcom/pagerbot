@@ -97,16 +97,9 @@ if __FILE__ == $0
   PagerBot.log.info("Is_admin is "+is_admin.to_s)
   if is_admin
     PagerBot::AdminPage.run!
-  elsif ARGV.first.include?('web')
+  elsif ARGV.first.include?('slack')
     PagerBot.reload_configuration!
-    if ARGV.first.include?('slack') || configatron.bot.adapter == 'slack'
-      PagerBot::SlackAdapter.run!
-    elsif ARGV.first.include?('hipchat') || configatron.bot.adapter == 'hipchat'
-      PagerBot::HipchatAdapter.run!
-    end
-  elsif ARGV.first.include? 'irc'
-    PagerBot.reload_configuration!
-    PagerBot::IrcAdapter.run!
+    PagerBot::SlackAdapter.run!
   else
     raise "Could not find adapter #{ARGV.first}. It must be either 'irc', 'slack' or 'hipchat'"
   end
